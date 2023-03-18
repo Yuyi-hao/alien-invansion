@@ -15,6 +15,9 @@ import sys
 import pygame
 from setting import Settings
 from ship import Ship
+import gameFunctions as gf
+from alien import Alien
+from pygame.sprite import Group
 
 
 def run_game():
@@ -27,20 +30,16 @@ def run_game():
     screen = pygame.display.set_mode(
         (game_settings.screenWidth, game_settings.screenHeight)
     )
-    ship = Ship(screen)
-
+    ship = Ship(screen, game_settings)
     pygame.display.set_caption('Alien Invasion')
-    bg_color = game_settings.bgColor
 
     while True: # start the game loop
         # check for events or inputs
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-
-        screen.fill(bg_color)  # set the background color
-        ship.blitme()
-        pygame.display.flip()
+        gf.checkEvents(game_settings, screen, ship, ship.bulletLst)
+        ship.update()
+        ship.bulletLst.update()
+        gf.update_bullet_lst(ship.bulletLst)
+        gf.updateScreen(game_settings, screen, ship, ship.bulletLst)
 
 
 run_game()
