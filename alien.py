@@ -14,16 +14,20 @@ class Alien(Sprite):
         """
         super().__init__()
         self.screen = screen
+
         self.settings = gameSetting
 
         # Load the image and set its rect attribute
-        self.img = pygame.image.load('assets/image/alien_ship.png')
-        self.rect = self.img.get_rect()
+        self.image = pygame.image.load('assets/image/nb_alien_ship.png')
+        self.rect = self.image.get_rect()
 
+        # Start each new alien hear the top left of the screen
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
 
-        # self.x = float(self.rect.x)
+        self.x = self.rect.x
+        self.y = 100
+
     def blitme(self):
         """
         Draw the alien at its current location.

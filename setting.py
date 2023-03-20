@@ -8,6 +8,7 @@ class Settings:
         self.screenHeight = 600
         self.bgColor = (230, 230, 230)
         self.speedFactor = 1
+        self.game_title = "Alien Invasion"
 
         # Bullet settings 
         self.bulletSpeedFactor = 1

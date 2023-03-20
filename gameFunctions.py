@@ -1,6 +1,7 @@
 import sys
 import pygame
 from bullet import Bullet
+from alien import Alien
 
 
 def checkEvents(gameSettings, screen, ship, bullets):
@@ -44,7 +45,7 @@ def checkKeyDownEvent(event, gameSettings, screen, ship, bullets):
         # bullets.add(newBullet)
 
 
-def updateScreen(gameSettings, screen, ship, bullets):
+def updateScreen(gameSettings, screen, ship, aliens, bullets):
     """
     Update images on screen and flip to the new screen,
     """
@@ -52,6 +53,7 @@ def updateScreen(gameSettings, screen, ship, bullets):
     for bullet in bullets.sprites():
         bullet.drawBullet()
     ship.blitme()
+    aliens.draw(screen)
     pygame.display.flip()
 
 def update_bullet_lst(bullets):
@@ -63,3 +65,24 @@ def update_bullet_lst(bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+
+
+def create_fleet(game_settings, screen, aliens):
+    """ Create a full fleet of aliens."""
+    alien = Alien(screen, game_settings)
+    alien_width = alien.rect.width
+    alien_height = alien.rect.height
+    available_space_H = game_settings.screenWidth - 2*alien_width
+    available_space_V = game_settings.screenHeight - 2*alien_height
+
+    number_alien_x = available_space_H // (2*alien_width) + 1
+    number_alien_y = available_space_V // (2*alien_height) + 1
+
+    for j in range(number_alien_y-1):
+        for i in range(number_alien_x):
+            alien = Alien(screen, game_settings)
+            alien.x = alien_width + 2*alien_width * i
+            alien.y = alien_height + 2*alien_height * j
+            alien.rect.x = alien.x
+            alien.rect.y = alien.y
+            aliens.add(alien)
